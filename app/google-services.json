@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1087495803611",
+    "project_id": "mapd721-p1-790e4",
+    "storage_bucket": "mapd721-p1-790e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087495803611:android:3359bd3ad4c4316fc532fe",
+        "android_client_info": {
+          "package_name": "com.zfl.mapd721_p1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087495803611-161vf84tijbrqatpfr0gosmkk2e8frn3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRPP1fiGGu19aWMy3tklM-lyp4V-kiBaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087495803611-161vf84tijbrqatpfr0gosmkk2e8frn3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
