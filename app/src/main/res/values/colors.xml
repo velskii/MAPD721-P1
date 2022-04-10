@@ -11,4 +11,43 @@
     <color name="colorPrimary">#00796b</color>
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="grey">#FFDEDADA</color>
+    <color name="material_grey">#616161</color>
+    <color name="widePosterBG">#ddd</color>
+    <color name="category_title">#4c4c4c</color>
+    <color name="cityBG">#f1f5f8</color>
+    <color name="dark">#55464646</color>
+
+    <!-- Intro swipe layout colors-->
+    <color name="bg_screen1">#80CBC4</color>
+    <color name="bg_screen2">#80CBC4</color>
+    <color name="bg_screen3">#80CBC4</color>
+    <color name="bg_screen4">#80CBC4</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#26a69a</color>
+    <color name="dot_dark_screen2">#26a69a</color>
+    <color name="dot_dark_screen3">#26a69a</color>
+    <color name="dot_dark_screen4">#26a69a</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#a3ceca</color>
+    <color name="dot_light_screen2">#a3ceca</color>
+    <color name="dot_light_screen3">#a3ceca</color>
+    <color name="dot_light_screen4">#a3ceca</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
 </resources>

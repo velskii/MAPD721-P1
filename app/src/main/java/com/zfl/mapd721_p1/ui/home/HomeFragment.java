@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,8 +27,24 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textHome;
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        final ListView lv = binding.lvReports;
+//        homeViewModel.getList(getContext()).observe(getViewLifecycleOwner(), lv::setAdapter);
+
+        final EditText searchLocation = binding.searchLocation;
+
+
+        final ImageView searchBtn = binding.searchButton;
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                homeViewModel.searchLocation( searchLocation.getText().toString(), getContext() ).observe(getViewLifecycleOwner(), lv::setAdapter);
+
+            }
+        });
         return root;
     }
 
