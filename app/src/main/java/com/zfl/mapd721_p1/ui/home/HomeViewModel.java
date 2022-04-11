@@ -16,12 +16,15 @@ import java.util.List;
 public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> mBtnWeather;
     private final MutableLiveData<ArrayAdapter> mLocation;
 
     private final MutableLiveData<ArrayAdapter> mList;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
+        mBtnWeather = new MutableLiveData<>();
+        mBtnWeather.setValue("Weather API");
         mLocation = new MutableLiveData<>();
         mList = new MutableLiveData<>();
 
@@ -30,6 +33,10 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<String> getText() {
         return mText;
+    }
+
+    public LiveData<String> getBtnWeatherText() {
+        return mBtnWeather;
     }
 
     public LiveData<ArrayAdapter> searchLocation(String input, Context context) {
