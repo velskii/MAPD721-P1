@@ -23,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.zfl.mapd721_p1.ui.weather.WeatherActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

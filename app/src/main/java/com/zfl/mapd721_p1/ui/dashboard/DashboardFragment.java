@@ -66,44 +66,29 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+//        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-//        final TextView textView = binding.textDashboard;
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final RecyclerView weatherRV = binding.idRvWeather;
-
-
+        loadingPB = binding.idPBLoading;
         homeRL = binding.idRLHome;
-//        homeRL = getActivity().findViewById(R.id.idRLHome);
-
-//        loadingPB = getActivity().findViewById(R.id.idPBLoading);
-
         cityNameTV = binding.idTVCityName;
         searchIV = binding.idIVSearch;
-
-//        cityNameTV = getActivity().findViewById(R.id.idTVCityName);
-
-//        searchIV = getActivity().findViewById(R.id.idIVSearch);
-
         temperatureTV = binding.idTVTemperature;
-//        temperatureTV = getActivity().findViewById(R.id.idTVTemperature);
-//        conditionTV = getActivity().findViewById(R.id.idTVCondition);
-//        weatherRV = getActivity().findViewById(R.id.idRvWeather);
-
         conditionTV = binding.idTVCondition;
-
-
-
-
-//        cityEdt = getActivity().findViewById(R.id.idEdtCity);
-//        backIV = getActivity().findViewById(R.id.idIVBack);
-//        iconIV = getActivity().findViewById(R.id.idIVIcon);
-
         cityEdt = binding.idEdtCity;
         backIV = binding.idIVBack;
         iconIV = binding.idIVIcon;
+//
+//
+////        getActivity().getActionBar().hide();
+//
+//        backIV.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+//        backIV.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        backIV.setAdjustViewBounds(false);
+//        backIV.setScaleType(ImageView.ScaleType.FIT_XY);
 
         weatherRVModelArrayList = new ArrayList<>();
         weatherRVAdapter = new WeatherRVAdapter(getContext(), weatherRVModelArrayList);
@@ -141,12 +126,6 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-//    }
-
     private void getWeatherInfo(String cityName) {
         String url = "https://api.weatherapi.com/v1/forecast.json?key=e2282bd84cf348ca97d40220221004&q="+cityName+"&days=1&aqi=yes&alerts=yes";
         cityNameTV.setText(cityName);
@@ -155,7 +134,7 @@ public class DashboardFragment extends Fragment {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-//                loadingPB.setVisibility(View.GONE);
+                loadingPB.setVisibility(View.GONE);
                 homeRL.setVisibility(View.VISIBLE);
                 weatherRVModelArrayList.clear();
                 try {
