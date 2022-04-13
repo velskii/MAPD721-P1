@@ -6,25 +6,25 @@ import android.widget.ArrayAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zfl.mapd721_p1.SearchResultModel;
 import com.zfl.mapd721_p1.YLPRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-    private final MutableLiveData<String> mBtnWeather;
     private final MutableLiveData<ArrayAdapter> mLocation;
 
-    private final MutableLiveData<ArrayAdapter> mList;
+    private final MutableLiveData<RecyclerView.Adapter> mList;
+    private YlpRecyclerViewAdapter YlpRVAdapter;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mBtnWeather = new MutableLiveData<>();
-        mBtnWeather.setValue("Weather API");
         mLocation = new MutableLiveData<>();
         mList = new MutableLiveData<>();
 
@@ -33,10 +33,6 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<String> getText() {
         return mText;
-    }
-
-    public LiveData<String> getBtnWeatherText() {
-        return mBtnWeather;
     }
 
     public LiveData<ArrayAdapter> searchLocation(String input, Context context) {
@@ -60,22 +56,22 @@ public class HomeViewModel extends ViewModel {
         return mLocation;
     }
 
-    public LiveData<ArrayAdapter> getList(String input, Context context) {
+    public LiveData<RecyclerView.Adapter> getList(String input, Context context) {
 
         YLPRepository ylp = new YLPRepository(context);
-        ylp.search(input, new YLPRepository.VolleyResponseListener() {
+        ylp.search( input, new YLPRepository.VolleyResponseListener() {
             @Override
             public void onError(String message) {
                 List empty = new ArrayList<> ();
-                ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, empty);
-                mList.setValue(arrayAdapter);
+
+                YlpRVAdapter = new YlpRecyclerViewAdapter( empty );
+                mList.setValue(YlpRVAdapter);
             }
             @Override
             public void onResponse(List<SearchResultModel> searchResultModelList) {
-//                mText.setValue( searchResultModelList.get(0).toString() );
 
-                ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, searchResultModelList);
-                mList.setValue(arrayAdapter);
+                YlpRVAdapter = new YlpRecyclerViewAdapter( searchResultModelList );
+                mList.setValue(YlpRVAdapter);
             }
         });
 

@@ -13,13 +13,21 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.zfl.mapd721_p1.SearchResultModel;
+import com.zfl.mapd721_p1.YLPRepository;
 import com.zfl.mapd721_p1.databinding.FragmentHomeBinding;
-import com.zfl.mapd721_p1.ui.weather.WeatherActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private YlpRecyclerViewAdapter YlpRVAdapter;
+    private  RecyclerView businessList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,35 +37,40 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final Button btnWeather = binding.btnWeather;
-        homeViewModel.getBtnWeatherText().observe(getViewLifecycleOwner(), btnWeather::setText);
-//        Button btnLogin = findViewById(R.id.btn_login);
-        btnWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), WeatherActivity.class));
-            }
-        });
+        businessList = binding.businessList;
+        businessList.setLayoutManager( new LinearLayoutManager(getActivity()) );
 
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        final ListView lv = binding.lvReports;
-//        homeViewModel.getList(getContext()).observe(getViewLifecycleOwner(), lv::setAdapter);
+        getDefaultDataForBusiness("Toronto");
 
         final EditText searchLocation = binding.searchLocation;
-
 
         final ImageView searchBtn = binding.searchButton;
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                homeViewModel.searchLocation( searchLocation.getText().toString(), getContext() ).observe(getViewLifecycleOwner(), lv::setAdapter);
+                homeViewModel.getList( searchLocation.getText().toString(), getContext() ).observe(getViewLifecycleOwner(), businessList::setAdapter);
 
             }
         });
         return root;
+    }
+
+    public void getDefaultDataForBusiness(String input) {
+        YLPRepository ylp = new YLPRepository(getContext());
+        ylp.search( input, new YLPRepository.VolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                List empty = new ArrayList<>();
+
+                YlpRVAdapter = new YlpRecyclerViewAdapter( empty );
+                businessList.setAdapter(YlpRVAdapter);
+            }
+            @Override
+            public void onResponse(List<SearchResultModel> searchResultModelList) {
+                YlpRVAdapter = new YlpRecyclerViewAdapter( searchResultModelList );
+                businessList.setAdapter(YlpRVAdapter);
+            }
+        });
     }
 
     @Override
