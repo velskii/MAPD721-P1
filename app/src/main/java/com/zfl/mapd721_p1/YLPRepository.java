@@ -21,6 +21,7 @@ import java.util.Map;
 public class YLPRepository {
 
     public static final String QUERY_SEARCH = "https://api.yelp.com/v3/businesses/search";
+    public static final String QUERY_DETAIL = "https://api.yelp.com/v3/businesses/";
     private String clientId = "oyREd_CuwJJoMlAGVE0Xgw";
     private String APIKey = "8MGOgG6KR_ZI_AoFUZ0yOqpBx0Tb3LWCSOmrMQb9z9_w10OJxsYzBHvh6UmBWyjim262HjzXj3_zmCrW8m5rERgBJnc1QAk7jsAHzT5hURliFu_Qgk4J3iNTd7VMYnYx";
 
@@ -93,6 +94,63 @@ public class YLPRepository {
                 params.put("term", "food");
                 params.put("location", "NYC");
                 return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this.ctx).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public interface DetailsResponseListener{
+        void onError(String message);
+        void onResponse(SearchResultModel searchResultModel);
+    }
+
+
+    public void getDetails (String id, DetailsResponseListener detailsResponseListener) {
+
+        String url = QUERY_DETAIL + id;
+
+        List<SearchResultModel> searchResultModels = new ArrayList<>();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            SearchResultModel searchResultModel = new SearchResultModel();
+
+                            searchResultModel.setId( response.getString("id") );
+                            searchResultModel.setAlias( response.getString("alias") );
+                            searchResultModel.setName( response.getString("name") );
+                            searchResultModel.setImage_url( response.getString("image_url") );
+                            searchResultModel.setIs_closed( response.getBoolean("is_closed") );
+                            searchResultModel.setUrl( response.getString("url") );
+                            searchResultModel.setReview_count( response.getInt("review_count") );
+                            searchResultModel.setRating((float) response.getLong("rating"));
+                            searchResultModel.setCoordinates( response.getJSONObject("coordinates") );
+                            searchResultModel.setLocation( response.getString("location") );
+
+                            searchResultModel.setPrice( response.getString("price") );
+
+                            detailsResponseListener.onResponse( searchResultModel );
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        detailsResponseListener.onError(error.toString());
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + APIKey);
+                return headers;
             }
         };
 

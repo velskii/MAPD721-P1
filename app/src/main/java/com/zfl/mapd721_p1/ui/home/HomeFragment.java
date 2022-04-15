@@ -1,6 +1,7 @@
 package com.zfl.mapd721_p1.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onResponse(List<SearchResultModel> searchResultModelList) {
+                Log.d("Zhou", searchResultModelList.toString());
                 YlpRVAdapter = new YlpRecyclerViewAdapter( searchResultModelList );
                 businessList.setAdapter(YlpRVAdapter);
             }

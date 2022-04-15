@@ -1,6 +1,7 @@
 package com.zfl.mapd721_p1.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.zfl.mapd721_p1.R;
+import com.zfl.mapd721_p1.RestaurantDetailsActivity;
 import com.zfl.mapd721_p1.SearchResultModel;
 import com.zfl.mapd721_p1.VolleySingleton;
 
@@ -107,9 +111,21 @@ public class YlpRecyclerViewAdapter extends RecyclerView.Adapter<YlpRecyclerView
         viewHolder.getDisplayName().setText( mDataSet.get(position).getName() );
         viewHolder.getDisplayPrice().setText( mDataSet.get(position).getPrice() );
         viewHolder.getDisplayLocation().setText( mDataSet.get(position).getLocation() );
-//        viewHolder.getDisplayReviewCount().setText( mDataSet.get(position).getCoordinates().toString() );
-        viewHolder.getDisplayAlias().setText( mDataSet.get(position).getAlias() );
+        viewHolder.getDisplayReviewCount().setText( "( " + mDataSet.get(position).getReview_count().toString() + " Ratings )" );
+//        viewHolder.getDisplayAlias().setText( mDataSet.get(position).getAlias() );
         viewHolder.getDisplayRating().setText( mDataSet.get(position).getRating().toString() );
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Intent intent = new Intent(activity, RestaurantDetailsActivity.class);
+                intent.putExtra("item_id", mDataSet.get(position).getId());
+                activity.startActivity(intent);
+
+
+            }
+        });
 
     }
     @Override

@@ -1,5 +1,7 @@
 package com.zfl.mapd721_p1;
 
+import org.json.JSONObject;
+
 public class SearchResultModel {
 
     private String id;
@@ -35,7 +37,7 @@ public class SearchResultModel {
     public String toString() {
 
         return "id='" + id + '\'' +
-                ", name='" + name + '\'';
+                ", rating=" + rating;
 
 //        return "SearchResultModel{" +
 //                "id='" + id + '\'' +
@@ -125,7 +127,13 @@ public class SearchResultModel {
     }
 
     public String getLocation() {
-        return location;
+        try {
+            JSONObject locationObj = new JSONObject( location );
+            return locationObj.getString("address1");
+        } catch (Exception error) {
+            return error.toString();
+        }
+
     }
 
     public void setLocation(String location) {
