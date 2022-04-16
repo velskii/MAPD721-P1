@@ -1,4 +1,4 @@
-package com.zfl.mapd721_p1.ui.dashboard;
+package com.zfl.mapd721_p1.ui.weatherInfo;
 
 import android.Manifest;
 import android.content.Context;
@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,9 +30,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
-import com.zfl.mapd721_p1.R;
-import com.zfl.mapd721_p1.databinding.FragmentDashboardBinding;
-import com.zfl.mapd721_p1.ui.weather.WeatherActivity;
+import com.zfl.mapd721_p1.databinding.FragmentWeatherInfoBinding;
 import com.zfl.mapd721_p1.ui.weather.WeatherRVAdapter;
 import com.zfl.mapd721_p1.ui.weather.WeatherRVModel;
 
@@ -43,9 +40,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DashboardFragment extends Fragment {
+public class WeatherInfoFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentWeatherInfoBinding binding;
 
     private RelativeLayout homeRL;
     private ProgressBar loadingPB;
@@ -61,10 +58,10 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        WeatherInfoViewModel weatherInfoViewModel =
+                new ViewModelProvider(this).get(WeatherInfoViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentWeatherInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 //        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -81,14 +78,6 @@ public class DashboardFragment extends Fragment {
         cityEdt = binding.idEdtCity;
         backIV = binding.idIVBack;
         iconIV = binding.idIVIcon;
-//
-//
-////        getActivity().getActionBar().hide();
-//
-//        backIV.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-//        backIV.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        backIV.setAdjustViewBounds(false);
-//        backIV.setScaleType(ImageView.ScaleType.FIT_XY);
 
         weatherRVModelArrayList = new ArrayList<>();
         weatherRVAdapter = new WeatherRVAdapter(getContext(), weatherRVModelArrayList);

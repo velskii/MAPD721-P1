@@ -7,7 +7,7 @@
         android:title="Restaurants" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_weather"
         android:icon="@drawable/ic_baseline_wb_sunny_24"
         android:title="Weather" />
 
